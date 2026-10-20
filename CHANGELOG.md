@@ -6,6 +6,20 @@ The versions here are **the repository's**, not the package's. The package versi
 to `empaquetar-uwp.ps1 -Version`, and it has to go up on **every** package you install, because
 installing the same version on top of itself unregisters it.
 
+## [1.0.1] — 2026-10-20
+
+### Fixed
+
+- **`tools/empaquetar-uwp.ps1` asked for a tile the package does not use.** It worked out which PNGs
+  the manifest needs with a regular expression over the whole file, and that also matches the ones
+  inside an **XML comment** — `Wide310x150Logo.png` is in one, because the wide tile is optional and
+  its line ships commented out. So the first thing the script did was stop and ask for a fifth tile
+  that nothing references. It now reads the XML's attributes and text nodes (`Square150x150Logo="…"`
+  and `<Logo>…</Logo>`), where tiles actually live; a comment is neither, so it cannot be mistaken for
+  a requirement. The four it asks for are the four the manifest names.
+
+  Found by running the check rather than reading it, which is the only way this kind of thing shows up.
+
 ## [1.0.0] — 2026-10-20
 
 First publication. The recipe for the UWP port, as it was applied to the build that has been playing on

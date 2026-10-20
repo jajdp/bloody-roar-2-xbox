@@ -52,7 +52,7 @@ sizes, and the packaging script stops with a clear message if the folder is empt
 | An Xbox Series X in Developer Mode | And a certificate to sign with — a self-signed one is fine ([`docs/INSTALL.md`](docs/INSTALL.md) §3) |
 
 SDL2 2.30.2 built for `WindowsStore` is a prerequisite, not a download: SDL3 has no WinRT backend.
-[`docs/INSTALL.md`](docs/INSTALL.md) §2 builds it in four commands.
+[`docs/INSTALL.md`](docs/INSTALL.md) §2 builds it in two commands.
 
 ## How it goes
 

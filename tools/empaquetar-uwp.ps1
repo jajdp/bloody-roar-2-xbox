@@ -62,10 +62,21 @@ if (-not (Test-Path -LiteralPath $exe)) { throw "falta el ejecutable de la conso
 if (-not (Test-Path -LiteralPath $Ajustes)) { throw "falta la configuración de la consola: $Ajustes" }
 
 # El arte no viaja en este repositorio: lo pone quien empaqueta (docs\ASSETS.md).
+#
+# Los mosaicos que hacen falta se leen del XML —de sus atributos y de sus nodos de texto, que es
+# donde van: `Square150x150Logo="Assets\…"` el primero, `<Logo>Assets\…</Logo>` el segundo—, y NO con
+# una expresión regular sobre el archivo entero. Esa encuentra también los que están dentro de un
+# comentario XML (el mosaico ancho lo está, porque es opcional) y entonces el empaquetado se detiene
+# pidiendo un PNG que el paquete no usa. Los comentarios no son ni atributos ni texto, así que así no
+# aparecen.
 $manRuta = Join-Path $def 'Package.appxmanifest'
 $man = [IO.File]::ReadAllText($manRuta)
-$exigidos = [regex]::Matches($man, 'Assets[\\/]([A-Za-z0-9._\-]+\.png)') |
-            ForEach-Object { $_.Groups[1].Value } | Sort-Object -Unique
+[xml]$manXml = $man
+$valores = @()
+$valores += $manXml.SelectNodes('//@*')     | ForEach-Object { $_.Value }
+$valores += $manXml.SelectNodes('//text()') | ForEach-Object { $_.Value }
+$exigidos = $valores | Where-Object { $_ -and $_.Trim() -match '\.png$' } |
+            ForEach-Object { Split-Path $_.Trim() -Leaf } | Sort-Object -Unique
 $faltan = $exigidos | Where-Object { -not (Test-Path -LiteralPath (Join-Path $def "Assets\$_")) }
 if ($faltan) {
     throw ("faltan mosaicos en package\Assets\: {0}. Este repositorio no distribuye arte del juego; " +

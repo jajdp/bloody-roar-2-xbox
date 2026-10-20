@@ -54,7 +54,7 @@ exactas, y el script de empaquetado se detiene con un mensaje claro si la carpet
 | Una Xbox Series X en modo desarrollador | Y un certificado con el que firmar; uno autofirmado vale ([`docs/INSTALL.es.md`](docs/INSTALL.es.md) §3) |
 
 Un SDL2 2.30.2 compilado para `WindowsStore` es un requisito, no una descarga: SDL3 no tiene WinRT.
-[`docs/INSTALL.es.md`](docs/INSTALL.es.md) §2 lo compila en cuatro órdenes.
+[`docs/INSTALL.es.md`](docs/INSTALL.es.md) §2 lo compila en dos órdenes.
 
 ## Cómo va
 
