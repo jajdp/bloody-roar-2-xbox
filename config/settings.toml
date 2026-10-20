@@ -1,0 +1,42 @@
+# Ajustes de fabrica del port de Bloody Roar II para la Xbox (los del PC los escribe el lanzador,
+# que en la consola no se compila). El primer arranque los copia a LocalState y a partir de ahi
+# manda el archivo de alli, asi que esto solo fija como arranca la primera vez.
+#
+# Lo que NO se pone a proposito:
+#   - [disc] path: en la consola lo senala disc.cfg, que escribe la entrada UWP con la ruta real del
+#     LocalState (el disco se sube en partes y se une en el primer arranque).
+#   - [memcard] rutas: el runtime las resuelve dentro de su LocalState.
+#   - [video] renderer: sin OpenGL en la consola, el runtime cae solo al dibujo por software.
+#   - aspect_ratio: el panoramico de este juego es cosa del mod br2.enhancement.widescreen
+#     (ver mods/state.toml), no de esta clave.
+
+[video]
+fullscreen        = 1
+supersampling     = 1
+antialiasing      = true
+texture_filtering = "nearest"
+fmv_filter        = "nearest"
+crt_filter        = "raw"
+scanlines         = false
+bios_hle          = true
+fast_boot         = false
+
+[audio]
+frequency = 44100
+spu_hq    = false
+
+[controller]
+# Sin lanzador que asigne dispositivo, el jugador 1 se queda en «keyboard» y el mando no se abre,
+# sin un solo aviso. En UWP, «auto» para las dos ranuras; «digital» porque el juego se maneja con
+# la cruceta. Comprobacion en el registro: «opened controller for slot: …».
+p1_device = "auto"
+p1_mode   = "digital"
+p2_device = "auto"
+p2_mode   = "digital"
+multitap  = false
+
+[launcher]
+skip_launcher = true
+
+[localization]
+language = "en"

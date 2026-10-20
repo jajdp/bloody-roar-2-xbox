@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+         xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+         xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+         xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+         IgnorableNamespaces="uap mp rescap">
+
+  <!-- Publisher TIENE que ser, letra por letra, el subject del certificado con el que firmas
+       (empaquetar-uwp.ps1 lo comprueba antes de empaquetar y se detiene si no coinciden). Cámbialo por el
+       tuyo: docs\INSTALL.es.md §3 explica cómo crear un certificado autofirmado para modo desarrollador.
+       ProcessorArchitecture="x64" hay que escribirlo a mano: con MSBuild lo pone el proyecto.
+       La versión la sube empaquetar-uwp.ps1 con -Version, y hay que subirla en CADA instalación: la
+       consola no reemplaza un paquete por otro de la misma versión, lo desregistra. -->
+  <Identity Name="BloodyRoar2-Recomp"
+            Publisher="CN=CHANGE-ME"
+            ProcessorArchitecture="x64"
+            Version="1.0.0.0" />
+
+  <mp:PhoneIdentity PhoneProductId="ddc4ac10-c2aa-4f86-914c-db26ac776c61" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+
+  <Properties>
+    <DisplayName>Bloody Roar II Recomp</DisplayName>
+    <PublisherDisplayName>CHANGE-ME</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.17763.0" MaxVersionTested="10.0.26100.0" />
+    <!-- El ejecutable importa el CRT del App Container (msvcp140_app.dll, vcruntime140_app.dll,
+         vccorlib140_app.dll), que vive en el paquete de marco de VCLibs. Declararlo es lo que hace que el
+         proceso lo vea: sin esta línea la consola no activa la aplicación. MSBuild la añade solo; este
+         manifiesto se escribe a mano. -->
+    <PackageDependency Name="Microsoft.VCLibs.140.00" MinVersion="14.0.33519.0" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="en-US" />
+  </Resources>
+
+  <Applications>
+    <!-- El objetivo de CMake es `psx-runtime-us` (región USA, SCUS-94424) y su ejecutable se llama
+         BloodyRoar2_Recompiled_USA.exe. Si compilas otra región, cambia las dos líneas y el OUTPUT_NAME
+         de tools\parche_uwp_cmake_juego.py. -->
+    <Application Id="App"
+                 Executable="BloodyRoar2_Recompiled_USA.exe"
+                 EntryPoint="BloodyRoar2_Recompiled_USA.App">
+      <uap:VisualElements DisplayName="Bloody Roar II Recomp"
+                          Description="Bloody Roar II (PlayStation, SCUS-94424) recompilado: BloodyRoar2Recomp de novapowers0, en 16:9. Pide tu propio disco."
+                          BackgroundColor="#000000"
+                          Square150x150Logo="Assets\Square150x150Logo.png"
+                          Square44x44Logo="Assets\Square44x44Logo.png">
+        <!-- Sin mosaico ancho: referenciar un PNG que no existe hace fallar a makepri y a makeappx, así
+             que si añades Wide310x150Logo.png (310 x 150) descomenta también esta línea. -->
+        <!-- <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" /> -->
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <Capability Name="internetClient" />
+  </Capabilities>
+</Package>
