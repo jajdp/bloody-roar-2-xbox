@@ -145,6 +145,18 @@ Las cifras y lo que **no** se volvió a medir están en
 
 ## Créditos y licencia
 
+**Casi nada de lo que hace que esto funcione es nuestro.** Este repositorio es una receta que une el trabajo de otros; sin cualquiera de estas piezas no habría port.
+
+| Qué hace | Quién lo hizo | Licencia |
+|---|---|---|
+| **[BloodyRoar2Recomp](https://github.com/novapowers0/BloodyRoar2Recomp)** — recompila *Bloody Roar II* | **novapowers0** | MIT |
+| **[RetroPortingToolKit/psxrecomp](https://github.com/RetroPortingToolKit/psxrecomp)** — el ecosistema de recompilación estática de PlayStation | **RetroPortingToolKit** | PolyForm Noncommercial 1.0.0 |
+| **[novapowers0/psxrecomp](https://github.com/novapowers0/psxrecomp)** — su fork de psxrecomp | **novapowers0** | see the project |
+| **[SDL](https://github.com/libsdl-org/SDL)** — ventana, mando y audio | **Sam Lantinga** and the SDL contributors | zlib |
+
+**La receta de empaquetado, las herramientas y esta documentación** son de **Recompilaciones**.
+
+
 Port y herramientas de **Recompilaciones**. Publicado bajo la
 [PolyForm Noncommercial License 1.0.0](LICENSE), la misma del framework psxrecomp del que esto es un
 derivado.

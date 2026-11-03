@@ -141,6 +141,18 @@ The numbers and what else was *not* re-measured are in [`docs/HOW-IT-WORKS.md`](
 
 ## Credits and license
 
+**Almost none of what makes this work is ours.** This repository is a recipe that glues together other people's work; without any one of these pieces there would be no port at all.
+
+| What it does | Who made it | License |
+|---|---|---|
+| **[BloodyRoar2Recomp](https://github.com/novapowers0/BloodyRoar2Recomp)** — recompiles *Bloody Roar II* | **novapowers0** | MIT |
+| **[RetroPortingToolKit/psxrecomp](https://github.com/RetroPortingToolKit/psxrecomp)** — the PlayStation static recompiler ecosystem | **RetroPortingToolKit** | PolyForm Noncommercial 1.0.0 |
+| **[novapowers0/psxrecomp](https://github.com/novapowers0/psxrecomp)** — its psxrecomp fork | **novapowers0** | see the project |
+| **[SDL](https://github.com/libsdl-org/SDL)** — window, input and audio | **Sam Lantinga** and the SDL contributors | zlib |
+
+**The packaging recipe, the tooling and this documentation** are by **Recompilaciones**.
+
+
 Port and tooling by **Recompilaciones**. Released under the
 [PolyForm Noncommercial License 1.0.0](LICENSE), matching the license of the psxrecomp framework this is
 a derivative of.
