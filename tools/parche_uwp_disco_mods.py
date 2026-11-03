@@ -13,9 +13,10 @@
 # El parche resuelve el disco desde `disc.cfg` —el puntero que escribe la entrada WinRT con la ruta real, después
 # de unir las partes subidas— justo antes de esa comprobación, y solo cuando hace falta.
 #
-# ⚠ El ancla no es la del port de Street Fighter EX2 Plus: entre los dos commits del framework el bloque del juego
-# en red se reescribió entero y su comentario es otro, así que el ancla heredada daba «0 apariciones». La llamada a
-# `mod_runtime_commit` sigue donde estaba, pero ahora cuelga de un if-else con el plan del lanzador.
+# ⚠ El ancla es la de ESTA revisión del framework: en una anterior el bloque del juego en red está
+# escrito de otra forma y su comentario es otro, así que un ancla tomada de allí da «0 apariciones».
+# La llamada a `mod_runtime_commit` sigue donde estaba, pero ahora cuelga de un if-else con el plan
+# del lanzador.
 #
 # Idempotente y todo o nada; escritura atómica.
 # Uso: parche_uwp_disco_mods.py <raíz del proyecto del juego>

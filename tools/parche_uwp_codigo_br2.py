@@ -1,6 +1,6 @@
-# Los cinco arreglos que pide ESTE framework para compilar en App Container, y que el port hermano de
-# Street Fighter EX2 Plus no necesitó: su revisión de psxrecomp es anterior y no traía ni los dos archivos
-# de diagnóstico ni el guardia de inanición (583 líneas más solo en runtime.cmake).
+# Los cinco arreglos que pide ESTE framework para compilar en App Container. Son propios de esta
+# revisión de psxrecomp: las anteriores no traían ni los dos archivos de diagnóstico ni el guardia
+# de inanición (583 líneas más solo en runtime.cmake).
 #
 #   1. runtime.cmake — atómicos de C11. El framework ya pasa /experimental:c11atomics, pero «scoped to the
 #      one C source that needs it»: audio_trace.c. Con MSVC también lo necesita starvation_ring.c (el
