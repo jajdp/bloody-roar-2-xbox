@@ -13,8 +13,8 @@ run on a Series S.
 ## 0. The starting point: a framework with no console in it
 
 The game project builds and plays on Windows. Its framework — `psxrecomp`, as the project pins it — had
-**not one mention of UWP** in `runtime.cmake`. For comparison, the sister port of another psxrecomp game
-found 28 mentions in its own framework fork, because that fork's author had started the work. Here,
+**not one mention of UWP** in `runtime.cmake`. For comparison, there are forks of psxrecomp
+with 28 mentions of UWP in that same file, because their author had started the work. Here,
 there was nothing: no profile, no guards, no stub for the parts of Windows an App Container does not
 have.
 
@@ -27,8 +27,8 @@ So the first patch is not a fix, it is a profile. `parche_uwp.py` adds to `runti
 - `/APPCONTAINER` on the link, and `SDL_MAIN_HANDLED` off, which is what lets the WinRT entry point be
   the entry point.
 
-Its four anchors survived **583 lines of change** in that one file between the framework revision the
-sister port used and the one this game pins. That is the argument for anchors over line numbers.
+Its four anchors survived **583 lines of change** in that one file between the framework revision they
+were written against and the one this game pins. That is the argument for anchors over line numbers.
 
 ## 1. "Failed to launch the application"
 
@@ -49,8 +49,8 @@ software rasteriser — which is what it uses on a console anyway. `dbghelp` and
 way: in UWP nothing needs to be linked by name, because `WindowsApp.lib` is the umbrella library CMake
 adds for `WindowsStore` and it already carries what is allowed, sockets included.
 
-The replacement passes `clang -fsyntax-only -Wall -Wextra` without a warning. It has one function the
-sister port's did not need: `gl_renderer_set_scanlines`, which this framework's present path calls.
+The replacement passes `clang -fsyntax-only -Wall -Wextra` without a warning. It has one function other
+versions did not need: `gl_renderer_set_scanlines`, which this framework's present path calls.
 
 ## 2. `SDL_CreateWindow failed: Could not initialize OpenGL / GLES library`
 
@@ -165,7 +165,7 @@ wall-clock pacer. The reason is simple once you see it: a frame that misses the 
 because knowing what does not work is worth as much as the recipe.
 
 The way forward is to make drawing cheaper — measure where the time goes, add fast paths to the
-rasteriser, take work out of the hot path — which is what a sister port of this family did to get a
+rasteriser, take work out of the hot path — which is what it takes to get a
 sustained 60. That work is not done here, and it is an open issue.
 
 ## 8. The mods, the disc, and the order they happen in
@@ -186,8 +186,8 @@ And here that is fatal rather than annoying, because widescreen ships **on** —
 console to tick it in — and its manifest carries the disc's SHA-256 for all three regions.
 `parche_uwp_disco_mods.py` resolves the disc from the `disc.cfg` sidecar right before the check.
 
-⚠ **Its anchor is not the sister port's.** Between the two framework revisions the netplay block was
-rewritten entirely, and the inherited anchor matched *zero* times. The call is still in the same place,
+⚠ **This anchor had to be rewritten.** Between the two framework revisions the netplay block was
+rewritten entirely, and the one carried over matched *zero* times. The call is still in the same place,
 but it now hangs off an if-else with the launcher's netplay plan. This is the most useful kind of patch
 failure: it stopped, named the file and the count, and wrote nothing.
 
@@ -205,7 +205,7 @@ from the package on every boot, writing `bios.cfg` and `disc.cfg` with absolute 
 runtime's output to logs the portal can read, recording how the app was activated, and asking SDL to
 handle the **B** button so the system does not take it as "back" and close the game.
 
-⚠ **Three values of another game were hiding in it**, inherited from the sister port, and all three fail
+⚠ **Three values of another game were hiding in it**, inherited from the copy it came from, and all three fail
 silently rather than loudly. They are listed here because anyone porting this recipe to a *third* game
 will meet exactly the same three: the **serial** in the entry point (it creates the data folder under the
 wrong name), the **data subfolder** in the paths patch (the runtime looks for its files where they are

@@ -6,6 +6,19 @@ The versions here are **the repository's**, not the package's. The package versi
 to `empaquetar-uwp.ps1 -Version`, and it has to go up on **every** package you install, because
 installing the same version on top of itself unregisters it.
 
+## [1.0.3] — 2026-11-03
+
+### Changed
+
+- **Passages that introduced a fact as "the same as in the other port" now state the fact.** They
+  named no repository, so there was nothing for the reader to go and look up, and the fact itself
+  went unsaid. Twelve passages of `docs/HOW-IT-WORKS` — six in each language — carried a fact as
+  "the sister port's", and two tool comments did the same.
+
+  Still said, because the reader can act on it: everything that is **not** ours — the upstream
+  project, the third-party forks, the files taken under their own license — and the sentences that
+  place this port among others without naming any, which stand on their own.
+
 ## [1.0.2] — 2026-11-03
 
 ### Changed

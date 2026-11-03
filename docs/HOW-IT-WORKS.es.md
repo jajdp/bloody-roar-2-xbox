@@ -12,9 +12,9 @@ nada en una Series S.
 ## 0. El punto de partida: un framework sin consola dentro
 
 El proyecto del juego compila y se juega en Windows. Su framework —`psxrecomp`, en el ancla que el
-proyecto fija— no tenía **ni una mención de UWP** en `runtime.cmake`. Para comparar: el port hermano de
-otro juego de psxrecomp encontró 28 menciones en su propio fork del framework, porque el autor de ese
-fork había empezado el trabajo. Aquí no había nada: ni perfil, ni guardas, ni sustituto para las partes
+proyecto fija— no tenía **ni una mención de UWP** en `runtime.cmake`. Para comparar: hay forks de
+psxrecomp con 28 menciones de UWP en ese mismo archivo, porque su autor ya había empezado ese
+trabajo. Aquí no había nada: ni perfil, ni guardas, ni sustituto para las partes
 de Windows que un App Container no tiene.
 
 Así que el primer parche no es un arreglo, es un perfil. `parche_uwp.py` añade a `runtime.cmake`:
@@ -27,7 +27,7 @@ Así que el primer parche no es un arreglo, es un perfil. `parche_uwp.py` añade
   WinRT sea la entrada.
 
 Sus cuatro anclas sobrevivieron a **583 líneas de cambios** en ese solo archivo entre la revisión del
-framework que usó el port hermano y la que fija este juego. Ese es el argumento de las anclas frente a
+framework en que se escribieron y la que fija este juego. Ese es el argumento de las anclas frente a
 los números de línea.
 
 ## 1. «Failed to launch the application»
@@ -49,8 +49,8 @@ su rasterizador por software, que es el que usa en una consola de todas formas. 
 se fueron por el mismo camino: en UWP no hay que enlazar nada por nombre, porque `WindowsApp.lib` es la
 biblioteca paraguas que CMake añade para `WindowsStore` y ya trae lo permitido, los sockets incluidos.
 
-El sustituto pasa `clang -fsyntax-only -Wall -Wextra` sin un aviso. Tiene una función que el del port
-hermano no necesitaba: `gl_renderer_set_scanlines`, que el camino de presentación de este framework
+El sustituto pasa `clang -fsyntax-only -Wall -Wextra` sin un aviso. Tiene una función que otras versiones
+no necesitaban: `gl_renderer_set_scanlines`, que el camino de presentación de este framework
 llama.
 
 ## 2. `SDL_CreateWindow failed: Could not initialize OpenGL / GLES library`
@@ -170,7 +170,7 @@ pierde el refresco *entero*, así que el castigo va a saltos. Está en este docu
 repositorio porque saber lo que no funciona vale tanto como la receta.
 
 El camino es **abaratar el dibujo** —medir dónde se va el tiempo, caminos rápidos del rasterizador,
-quitar trabajo del camino caliente—, que es lo que hizo un port hermano de esta familia para llegar a 60
+quitar trabajo del camino caliente—, que es lo que hace falta para llegar a 60
 sostenidos. Ese trabajo no está hecho aquí, y está abierto como issue.
 
 ## 8. Los mods, el disco y el orden en que pasan las cosas
@@ -191,8 +191,8 @@ Y aquí eso es fatal, no molesto, porque el panorámico va **encendido** —en u
 Mods donde marcarlo— y su manifiesto lleva el SHA-256 del disco de las tres regiones.
 `parche_uwp_disco_mods.py` resuelve el disco desde el puntero `disc.cfg` justo antes de la comprobación.
 
-⚠ **Su ancla no es la del port hermano.** Entre las dos revisiones del framework el bloque del juego en
-red se reescribió entero, y el ancla heredada daba *cero* apariciones. La llamada sigue en el mismo
+⚠ **Aquí hubo que rehacer el ancla.** Entre las dos revisiones del framework el bloque del juego en
+red se reescribió entero, y la que venía de antes daba *cero* apariciones. La llamada sigue en el mismo
 sitio, pero ahora cuelga de un if-else con el plan de netplay del lanzador. Este es el tipo de fallo de
 parche más útil: se detuvo, dijo el archivo y el recuento, y no escribió nada.
 
@@ -210,7 +210,7 @@ datos desde el paquete en cada arranque, escribir `bios.cfg` y `disc.cfg` con ru
 salida del runtime a registros que el portal pueda leer, anotar cómo se activó la aplicación y pedirle a
 SDL que atienda el botón **B** para que el sistema no lo tome como «atrás» y cierre el juego.
 
-⚠ **Dentro había tres valores de otro juego**, heredados del port hermano, y los tres fallan en silencio
+⚠ **Dentro había tres valores de otro juego**, heredados de la copia, y los tres fallan en silencio
 en vez de a gritos. Se listan aquí porque quien lleve esta receta a un *tercer* juego se va a encontrar
 exactamente los mismos tres: el **serial** en la entrada (crea la carpeta de datos con el nombre
 equivocado), la **subcarpeta de datos** en el parche de rutas (el runtime busca sus archivos donde no
